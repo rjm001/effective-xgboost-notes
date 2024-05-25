@@ -6,6 +6,7 @@ import pandas as pd
 import urllib.request
 import zipfile
 
+
 url = 'https://github.com/mattharrison/datasets/raw/master/data/'\
     'kaggle-survey-2018.zip'
 fname = 'data/kaggle-survey-2018.zip'
