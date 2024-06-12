@@ -4,8 +4,7 @@ import urllib.request
 import zipfile
 import os
 from feature_engine import encoding, imputation
-from sklearn import base, pipeline
-from sklearn import model_selection
+from sklearn import base, pipeline, preprocessing, model_selection
 
 url = 'https://github.com/mattharrison/datasets/raw/master/data/'\
     'kaggle-survey-2018.zip'
@@ -138,8 +137,13 @@ kag_X_train, kag_X_test, kag_y_train, kag_y_test = model_selection.train_test_sp
 
 X_train = kag_pl.fit_transform(kag_X_train, kag_y_train)
 X_test = kag_pl.transform(kag_X_test)
-print(X_train)
+#print(X_train)
 kag_y_train
+X = pd.concat([X_train, X_test], axis='index')
+label_encoder = preprocessing.LabelEncoder()
+y_train = label_encoder.fit_transform(kag_y_train)
+y_test = label_encoder.transform(kag_y_test)
+y = pd.Series([*y_train, *y_test], index=X.index)
 
 
 if __name__ == "__main__":
@@ -156,3 +160,8 @@ if __name__ == "__main__":
     X_test = kag_pl.transform(kag_X_test)
     print(X_train)
     kag_y_train
+    X = pd.concat([X_train, X_test], axis='index')
+    label_encoder = preprocessing.LabelEncoder()
+    y_train = label_encoder.fit_transform(kag_y_train)
+    y_test = label_encoder.transform(kag_y_test)
+    y = pd.Series([*y_train, *y_test], index=X.index)
